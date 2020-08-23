@@ -10,7 +10,8 @@ const colors = [
 const names = ["Aqua green", "Blue", "Red", "Green", "Orange", "Pink"];
 var numeros = [];
 var numerosUsuario = [];
-
+var nickname = prompt("Enter a nickname: ");
+alert("Nombre digitado: "+nickname);
 const button = document.getElementById("button");
 const pads = document.querySelectorAll(".pads div");
 const visual = document.querySelector(".visual");
@@ -63,7 +64,7 @@ function changeColor(usuario) {
                     interval = interval - 100;
                                       
                     if(prueba){
-                        puntaje.innerText = 'Score: ' + (ronda-1);                                            
+                        puntaje.innerText = nickname+"'s " + 'Score: ' + (ronda-1);                                            
                     } else{
                         alert("You Lose! "+puntaje.innerText);
                         button.innerText = 'Restart';
