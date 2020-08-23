@@ -67,12 +67,12 @@ public class HttpServer implements Runnable {
      */
     private void getPetitions(String res,PrintWriter out ) throws IOException{
         String outputLine = "";
-		System.out.println("Ruta peticion:"+res);
+		
         if (res.substring(0, 3).equals("GET")) {
             res = res.substring(5, res.length() - 9);
-			System.out.println("Archivo A buscar:"+res);
+			
             File archivoEncontrado = buscarArchivo(res);
-			System.out.println("Encontro archivo?:"+archivoEncontrado);	
+				
             if (archivoEncontrado != null) {
                 try {
                     getRequestFile(archivoEncontrado, out, res, clientSocket);
@@ -103,9 +103,9 @@ public class HttpServer implements Runnable {
             imgr.drawImage(clientSocket.getOutputStream(), out, res, archivoEncontrado);
         } else if (res.contains("html")) {
             Html5Resource texto = new Html5Resource();
-			System.out.println("Creado archivo HTML ahora a buscar");
+			
             texto.writeText(clientSocket.getOutputStream(), out, archivoEncontrado, "text/html");
-			System.out.println("Encontro archivo HTML");
+			
         } else if (res.contains(".js")) {
             Html5Resource texto = new Html5Resource();
             texto.writeText(clientSocket.getOutputStream(), out, archivoEncontrado, "text/javascript");
@@ -127,7 +127,7 @@ public class HttpServer implements Runnable {
      * @return
      */
     private File buscarArchivo(String res) {
-        //BuscarArchivo find = new BuscarArchivo();
+        
         //return new File(System.getProperty("user.dir") + "\\src\\main\\resources\\" + res); //"index.html"
 		return new File(System.getProperty("user.dir") + "/src/main/resources/" + res);
 
@@ -138,8 +138,7 @@ public class HttpServer implements Runnable {
         try {
 			int port = getPort();
             ServerSocket serverSocket = new ServerSocket(port);
-			System.out.println("Escuchando en el puerto: "+port);
-            System.out.println("Listo para recibir ...");
+			System.out.println("Escuchando en el puerto: "+port);            
             pool = Executors.newCachedThreadPool();
             while (true) {
                 Socket socket = serverSocket.accept();
@@ -184,8 +183,8 @@ public class HttpServer implements Runnable {
                 + "<h1>ERROR 404.<p><div style='color:red'>" + res.toUpperCase() + "</div>" + " NO ENCONTRADO</p></h1>"
                 + "</body>"
                 + "</html>";
-		System.out.println("IMPRESION DE HTML ERROR:");
-		System.out.println(outputLine);
+		
+		
         out.println(outputLine);
     }
 
