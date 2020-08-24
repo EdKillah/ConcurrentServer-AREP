@@ -24,8 +24,11 @@ public class Html5Resource {
     public void writeText(OutputStream clientSocket, PrintWriter out, File archivoEncontrado,String type) throws IOException {
         StringBuilder cadena = new StringBuilder();
         String line = null;
+        System.out.println("Builder html creado!: "+cadena);
         FileReader prueba = new FileReader(archivoEncontrado);
+        System.out.println("Archivo creado!: "+prueba);
         BufferedReader reader = new BufferedReader(prueba);
+        System.out.println("Reader creado!!: "+reader);
 		String outputLine="";
         while ((line = reader.readLine()) != null) {
             cadena.append(line);
