@@ -17,7 +17,7 @@ public class HttpClient {
 		connectDB();
 	}
 
-	public void connectDB() {
+	private void connectDB() {
 		conexion = new ConexionBD();
 	}
 
@@ -57,7 +57,7 @@ public class HttpClient {
 	 * @param url
 	 * @param out
 	 */
-	public void configureLinks(String url, PrintWriter out) {
+	private void configureLinks(String url, PrintWriter out) {
 		if (url.contains("colorsApp/ranking")) {
 			String outline = HttpServer.getHeader() + conexion.getResults();
 			out.println(outline);			

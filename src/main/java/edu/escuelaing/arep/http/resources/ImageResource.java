@@ -18,25 +18,23 @@ import javax.imageio.ImageIO;
  */
 public class ImageResource {
 
-    public void drawImage(OutputStream  clientSocket,PrintWriter out ,String res, File archivoEncontrado) throws IOException {
-        
-        //System.out.println("entra?????? ****final: "+archivoEncontrado);
-        //System.out.println("ME ENCUENTRO EN IMAGEN Y ESTA ES LA RES: "+res);
-		String outputLine="";
-        if(res.contains("img/")){
-            //System.out.println("Antes de aortar:"+res);
-            res = res.substring(4,res.length());
-            //System.out.println("Entro en condicion IMG: "+res);
-        }
-			BufferedImage image = ImageIO.read(new File(System.getProperty("user.dir")+ "/src/main/resources/img/" + res));
-            ByteArrayOutputStream ArrBytes = new ByteArrayOutputStream();
-            DataOutputStream writeImg = new DataOutputStream(clientSocket);
-            ImageIO.write(image, "PNG", ArrBytes);
-            writeImg.writeBytes("HTTP/1.1 200 OK \r\n");
-            writeImg.writeBytes("Content-Type: image/png \r\n");
-            writeImg.writeBytes("\r\n");
-            writeImg.write(ArrBytes.toByteArray());
-            //System.out.println(System.getProperty("user.dir") + res);
-        
-    }
+	public void drawImage(OutputStream clientSocket, PrintWriter out, String res, File archivoEncontrado)
+			throws IOException {
+
+		String outputLine = "";
+		if (res.contains("img/")) {
+
+			res = res.substring(4, res.length());
+		}
+		BufferedImage image = ImageIO.read(new File(System.getProperty("user.dir") + "/src/main/resources/img/" + res));
+		ByteArrayOutputStream ArrBytes = new ByteArrayOutputStream();
+		DataOutputStream writeImg = new DataOutputStream(clientSocket);
+		ImageIO.write(image, "PNG", ArrBytes);
+		writeImg.writeBytes("HTTP/1.1 200 OK \r\n");
+		writeImg.writeBytes("Content-Type: image/png \r\n");
+		writeImg.writeBytes("\r\n");
+		writeImg.write(ArrBytes.toByteArray());
+		
+
+	}
 }
