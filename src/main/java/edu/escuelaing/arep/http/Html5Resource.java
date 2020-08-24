@@ -1,4 +1,4 @@
-package edu.escuelaing.arsw.intro.app.tallernetworking.Http;
+package edu.escuelaing.arep.http;
 
 import java.io.BufferedReader;
 import java.io.File;
