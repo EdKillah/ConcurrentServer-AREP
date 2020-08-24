@@ -70,7 +70,7 @@ public class HttpServer implements Runnable {
 	 * @throws IOException
 	 */
 	private void getPetitions(String res, PrintWriter out) throws IOException {
-		
+		System.out.println("La peticion: "+res);
 		String type = res.substring(0, 3);
 		System.out.println("En get Petitions type: "+type);
 		if (type.equals("GET")) {
