@@ -95,6 +95,7 @@ public class HttpServer implements Runnable {
 		
 		
 		conexion.saveRecord(nickname, Integer.parseInt(score));
+		System.out.println("Guardo en post Correctamente");
 		
 	}
 
@@ -118,7 +119,7 @@ public class HttpServer implements Runnable {
 			try {
 				getRequestFile(archivoEncontrado, out, res, clientSocket);
 			} catch (java.io.FileNotFoundException ex) {
-				System.out.println("Error de leyendo archivo:");
+				System.out.println("Error de leyendo archivo: "+ex);
 				error(outputLine, res, out);
 			}
 		} else {
