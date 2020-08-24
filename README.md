@@ -79,7 +79,7 @@ o accediendo al siguiente enlace:
 ### Imagenes de muestra del servidor
 
 #### Html5 básico
-La siguiente imagen muestra una alerta que proviene de un codigo *javascript*.
+La siguiente imagen muestra una lectura de texto plano que proviene de un codigo *javascript*.
 
 ![](resources/js1.PNG)
 
@@ -125,3 +125,4 @@ This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md
 ### Enlace al sistema de integración continua
 
 _A continuación se presenta el link:_
+[![CircleCI](https://circleci.com/gh/EdKillah/ConcurrentServer-AREP.svg?style=svg)](https://circleci.com/gh/EdKillah/ConcurrentServer-AREP)
