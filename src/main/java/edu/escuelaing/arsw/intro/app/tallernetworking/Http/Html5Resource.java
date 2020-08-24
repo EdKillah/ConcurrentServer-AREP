@@ -25,6 +25,7 @@ public class Html5Resource {
         StringBuilder cadena = new StringBuilder();
         String line = null;
         System.out.println("Builder html creado!: "+cadena);
+		System.out.println("Archivo en Write Text!: "+archivoEncontrado);
         FileReader prueba = new FileReader(archivoEncontrado);
         System.out.println("Archivo creado!: "+prueba);
         BufferedReader reader = new BufferedReader(prueba);
