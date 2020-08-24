@@ -21,7 +21,7 @@ public class HttpServer implements Runnable {
 
         serverSocket = null;
         this.clientSocket = clientSocket;
-
+		System.out.println("NUEVO CONSTRCUTOR!");
     }
 
     /**
