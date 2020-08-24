@@ -1,4 +1,4 @@
-package edu.escuelaing.arep.http;
+package edu.escuelaing.arep.http.persistence;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -16,15 +16,9 @@ public class ConexionBD {
 	PreparedStatement calculoStatement;
 
 	public ConexionBD() {
-		System.out.println("Entra en constructor");
+		
 		realizaConexion();
 		createStatement();
-	}
-
-	public static void main(String[] args) {
-		// realizaConexion();
-		// createStatement();
-		// saveRecord("Joshua",2);
 	}
 
 	public void realizaConexion() {

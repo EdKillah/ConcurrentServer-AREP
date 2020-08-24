@@ -1,5 +1,5 @@
 
-package edu.escuelaing.arep.http;
+package edu.escuelaing.arep.http.resources;
 
 
 import java.io.*;

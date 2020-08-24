@@ -1,4 +1,4 @@
-package edu.escuelaing.arep.http;
+package edu.escuelaing.arep.http.resources;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -23,19 +23,13 @@ public class Html5Resource {
      */
     public void writeText(OutputStream clientSocket, PrintWriter out, File archivoEncontrado,String type) throws IOException {
         StringBuilder cadena = new StringBuilder();
-        String line = null;
-        System.out.println("Builder html creado!: "+cadena);
-		System.out.println("Archivo en Write Text!: "+archivoEncontrado);
-        FileReader prueba = new FileReader(archivoEncontrado);
-        System.out.println("Archivo creado!: "+prueba);
-        BufferedReader reader = new BufferedReader(prueba);
-        System.out.println("Reader creado!!: "+reader);
+        String line = null;        
+        FileReader prueba = new FileReader(archivoEncontrado);        
+        BufferedReader reader = new BufferedReader(prueba);        
 		String outputLine="";
         while ((line = reader.readLine()) != null) {
             cadena.append(line);
-        }
-		System.out.println("CADENA DE HTML");
-		System.out.println(cadena);
+        }				
 		outputLine = "HTTP/1.1 200 OK\r\n"
                 + "Content-Type: "+type+"\r\n"
                 + "\r\n"

@@ -20,8 +20,7 @@ const text = document.getElementById("color");
 const posicion = document.getElementById("ronda");
 const puntaje = document.getElementById("puntaje");
 const taps = document.getElementById("taps");
-
-const contenedor = document.querySelector("#contenedor");
+const contenedor = document.querySelector("#home");
 
 
 var interval = 1500;
@@ -30,6 +29,8 @@ var bandGlobal = true;
 var ronda = 1;
 var userTaps=0;
 var numeroAleatorio;
+
+contenedor.style.display = "none";
 
 button.addEventListener('click', () => {
     
@@ -42,10 +43,6 @@ window.addEventListener('load', () => {
 
     
     changeColor("si");
-    
-
-
-    
 
 });
 
@@ -97,6 +94,7 @@ function changeColor(usuario) {
 function validateSave(){
     var opcion = confirm(puntaje.innerText+" Save score?");
     if(opcion){
+    	validateNickname();
     	console.log("Guardando puntaje!"); 
     	$.ajax({ 
     		  type: "POST", 
@@ -108,6 +106,12 @@ function validateSave(){
     		  dataType: "text"
     		}); 
     }
+}
+
+function validateNickname(){
+	if(nickname == null || nickname=="" || nickname== " "){
+		nickname = "anonymus";
+	}
 }
 
 function reset(){
@@ -160,11 +164,9 @@ async function start() {
 
 function showGoBack(){
 	
-	const div = document.createElement('div');
-	div.classList.add('button');
-	contenedor.appendChild(div);
+	contenedor.style.display = 'block';	
 	
-	div.addEventListener('click', function(){
+	contenedor.addEventListener('click', function(){
 		location.replace("inicio.html");
 	});
 }

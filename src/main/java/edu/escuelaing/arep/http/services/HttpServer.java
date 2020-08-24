@@ -1,4 +1,4 @@
-package edu.escuelaing.arep.http;
+package edu.escuelaing.arep.http.services;
 
 /**
  * HttpServer class makes possible the connection between any client and a server
@@ -12,19 +12,19 @@ import java.util.concurrent.Executors;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+//import edu.escuelaing.arep.http.persistence.ConexionBD;
+import edu.escuelaing.arep.http.resources.Html5Resource;
+import edu.escuelaing.arep.http.resources.ImageResource;
+
 public class HttpServer implements Runnable {
 
 	private final Socket clientSocket;
 	private ServerSocket serverSocket;
+	private HttpClient client;
 
-	//Esto debe ir en su clas o aqui?
-	private ConexionBD conexion;
-	
 	public HttpServer(final Socket clientSocket) throws IOException {
-		System.out.println("Consctructor de httpserver");
 		serverSocket = null;
 		this.clientSocket = clientSocket;
-		conexion = new ConexionBD();
 
 	}
 
@@ -40,13 +40,12 @@ public class HttpServer implements Runnable {
 
 		out = new PrintWriter(clientSocket.getOutputStream(), true);
 		in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
-		String inputLine, outputLine, res = "";
+		String inputLine, res = "";
 		int contador = 0;
 		while ((inputLine = in.readLine()) != null) {
-			System.out.println("Received: " + inputLine + " CONTADOR: "+contador);
+			// System.out.println("Received: " + inputLine);
 			if (contador == 0) {
 				res = inputLine;
-				//getPetitions(res, out);
 				contador++;
 			}
 
@@ -54,7 +53,7 @@ public class HttpServer implements Runnable {
 				break;
 			}
 		}
-		System.out.println("YA SALIO DEL CICLO Y VA A ENVIAR A GETPETITIONS: "+res);
+
 		getPetitions(res, out);
 
 		out.close();
@@ -70,60 +69,38 @@ public class HttpServer implements Runnable {
 	 * @throws IOException
 	 */
 	private void getPetitions(String res, PrintWriter out) throws IOException {
-		System.out.println("La peticion: "+res);
+
 		String type = res.substring(0, 3);
-		System.out.println("En get Petitions type: "+type);
 		if (type.equals("GET")) {
 			GET(res, out);
-		} else if(type.equals("POS")) {	
-			POST(res,out);
+		} else if (type.equals("POS")) {
+			POST(res, out);
 		}
 	}
-	
+
 	public void POST(String res, PrintWriter out) throws IOException {
-		System.out.println("Entrando EN POST!!!!!!!!!!!!");
-		//System.out.println("RES: "+res);
-		res = res.substring(5, res.length() - 9);
-		//System.out.println("Nuevo res: "+res);
-		String[] aux = res.split("&");
-		//System.out.println("SEPARACION: "+aux[0]+" & "+aux[1]);
-		String[] nickSeparation = aux[0].split("\\?");
-		String nickname = nickSeparation[1].substring(9,nickSeparation[1].length());
-		String score = aux[1].substring(6,aux[1].length()); 
-		System.out.println("NICKNAME: "+nickname);
-		System.out.println("PUNTAJE: "+score);
-		
-		
-		conexion.saveRecord(nickname, Integer.parseInt(score));
-		System.out.println("Guardo en post Correctamente");
-		
+		System.out.println("¡¡¡¡¡¡¡¡¡¡Entrando EN POST!!!!!!!!!!!!: " + res);
+		client.POST(res);
 	}
 
-	public void GET(String res, PrintWriter out) throws IOException  {
-
+	public void GET(String res, PrintWriter out) throws IOException {
+		System.out.println("Peticion original: " + res);
 		String outputLine = "";
 		res = res.substring(5, res.length() - 9);
-		File archivoEncontrado = buscarArchivo(res);
-		//ACA DEBEMOS PARTIR EL SERVIDOR DE LA APP!
-		System.out.println("################ PETICION:"+res);
-		if(res.equals("colorsApp/ranking")) {
-			System.out.println("****ESTA BUSCANDO LA LISTA DE RNAKING*******");			
-			System.out.println("Listo creo la conexion ahora voy a pedir lista!");
-			String outline = "HTTP/1.1 200 OK\r\n" + "Content-Type: text/html\r\n" + "\r\n" +conexion.getResults();
-			System.out.println("-*-*_*-*-*-*-*_*-*-*-*-*-*-*-*-*-*-*-");
-			System.out.println(outline);
-			out.println(outline);
-			System.out.println("TERMINO DE ENVIAR RANKING!");
-		}
-		else if (archivoEncontrado != null) {
+		File archivoEncontrado = findFile(res);
+		System.out.println("Peticion modificada:" + res);
+		if (client.containsURL(res, out)) { // Esta forma de poner conficional puede cambiar
+			System.out.println("EFECTIVAMENTE EL CLIENTE TIENE EL URL");
+
+		} else if (archivoEncontrado != null) {
 			try {
 				getRequestFile(archivoEncontrado, out, res, clientSocket);
 			} catch (java.io.FileNotFoundException ex) {
-				System.out.println("Error de leyendo archivo: "+ex);
+				System.out.println("An error was occurred while reading a file: " + ex);
 				error(outputLine, res, out);
 			}
 		} else {
-			System.out.println("Error de archivo nulo:" + res);
+			System.out.println("An error was occurred because NULL FILE:" + res);
 			error(outputLine, res, out);
 		}
 	}
@@ -141,53 +118,70 @@ public class HttpServer implements Runnable {
 			throws IOException {
 
 		Html5Resource texto = new Html5Resource();
-		
+
 		if (res.contains("png") || res.contains("jpg")) {
-			
+
 			ImageResource imgr = new ImageResource();
 			imgr.drawImage(clientSocket.getOutputStream(), out, res, archivoEncontrado);
-			
-		} else if (res.contains("html")) {		
-			System.out.println("Va a pedir el archivo html! Archivo: "+archivoEncontrado);
+
+		} else if (res.contains("html")) {
+
 			texto.writeText(clientSocket.getOutputStream(), out, archivoEncontrado, "text/html");
-			System.out.println("Encontro el archivo html: "+archivoEncontrado);
+
 		} else if (res.contains(".js")) {
-			
+
 			texto.writeText(clientSocket.getOutputStream(), out, archivoEncontrado, "text/javascript");
 
 		} else if (res.contains(".css")) {
-			
+
 			texto.writeText(clientSocket.getOutputStream(), out, archivoEncontrado, "text/css");
-			
+
 		} else {
 			error("", res, out);
 		}
 	}
 
 	/**
-	 * Concats the file name with the root path
+	 * Finds file given a name by parameter return null if doesn't exists. static
+	 * files should be in the src/main/resources route.
 	 *
 	 * @param res
 	 * @return
 	 */
-	private File buscarArchivo(String res) {
+	private File findFile(String res) {
 		return new File(System.getProperty("user.dir") + "/src/main/resources/" + res);
+	}
+
+	public void setClient(HttpClient client) {
+		this.client = client;
+	}
+
+	/**
+	 * Returns HTTP Header to be concatenated with your own files or answers.
+	 * 
+	 * @return String HTTP header.
+	 */
+	public static String getHeader() {
+		return "HTTP/1.1 200 OK\r\n" + "Content-Type: text/html\r\n" + "\r\n";
 	}
 
 	public static void main(String[] args) {
 		ExecutorService pool = null;
+		int port = getPort();
 		try {
-			int port = getPort();
 			ServerSocket serverSocket = new ServerSocket(port);
 			System.out.println("Escuchando en el puerto: " + port);
 			pool = Executors.newCachedThreadPool();
+			HttpClient client = new HttpClient();
+
 			while (true) {
 				Socket socket = serverSocket.accept();
 				HttpServer req = new HttpServer(socket);
+				req.setClient(client);
 				pool.execute(req);
 			}
 		} catch (IOException e) {
-			System.err.println("Could not listen on port: 8080.");
+			System.err.println("Could not listen on port: " + port);
 			System.exit(1);
 		} finally {
 			pool.shutdown();
@@ -232,11 +226,9 @@ public class HttpServer implements Runnable {
 	public void run() {
 		try {
 			prepareRequest(clientSocket);
-			// throw new UnsupportedOperationException("Not supported yet."); //To change
-			// body of generated methods, choose Tools | Templates.
-		} catch (FileNotFoundException ex) {
-			// String outputLine = error("", "Recurso no encontrado");
 
+		} catch (FileNotFoundException ex) {
+			System.err.println("File not found exception while executing thread.");
 		} catch (IOException ex) {
 			System.err.println("Run exception while executing thread.");
 			Logger.getLogger(HttpServer.class.getName()).log(Level.SEVERE, null, ex);

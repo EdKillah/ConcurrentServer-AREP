@@ -1,25 +1,29 @@
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
 }
 
 body {
-	background-color: lightgreen;
-    font-family: 'Rowdies', cursive;    
-    text-align: center;
+	background: #56ab2f; 
+	background: -webkit-linear-gradient(to right, #a8e063, #56ab2f);	
+	background: linear-gradient(to right, #a8e063, #56ab2f);
+	color: white;	
+	font-family: 'Rowdies', cursive;
+	text-align: center;
 }
 
-header {
+header {	
 	margin-top: 10%;
-	margin-bottom: 20%;
+	margin-bottom: 10%;
 }
 
-
-div {    
-    display: flex;    
-    justify-content: space-between;
-    margin: auto;
-    
+h1 {
+	font-size: 80px;
 }
-    
+
+div {
+	display: flex;
+	justify-content: space-between;
+	margin: auto;
+}
