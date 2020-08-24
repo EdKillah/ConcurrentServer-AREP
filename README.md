@@ -120,9 +120,9 @@ La siguiente imagen muestra los diagramas de clases que permiten la interacción
 
 ## Licencia
 
-This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details
 
 ### Enlace al sistema de integración continua
 
-_A continuación se presenta el link:_
+A continuación se presenta el link:
 [![CircleCI](https://circleci.com/gh/EdKillah/ConcurrentServer-AREP.svg?style=svg)](https://circleci.com/gh/EdKillah/ConcurrentServer-AREP)
