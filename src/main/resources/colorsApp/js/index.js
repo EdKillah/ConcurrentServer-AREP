@@ -11,7 +11,7 @@ const names = ["Aqua green", "Blue", "Red", "Green", "Orange", "Pink"];
 var numeros = [];
 var numerosUsuario = [];
 var nickname = prompt("Enter a nickname: ");
-alert("Nombre digitado: "+nickname);
+
 const button = document.getElementById("button");
 const pads = document.querySelectorAll(".pads div");
 const visual = document.querySelector(".visual");
@@ -20,6 +20,10 @@ const text = document.getElementById("color");
 const posicion = document.getElementById("ronda");
 const puntaje = document.getElementById("puntaje");
 const taps = document.getElementById("taps");
+
+const contenedor = document.querySelector("#contenedor");
+
+
 var interval = 1500;
 var mini = 500;
 var bandGlobal = true;
@@ -38,6 +42,10 @@ window.addEventListener('load', () => {
 
     
     changeColor("si");
+    
+
+
+    
 
 });
 
@@ -56,18 +64,18 @@ function changeColor(usuario) {
                 body.style.backgroundColor = colors[index];
                 userTaps++;                
                 setTaps(userTaps);
-                numerosUsuario.push(index);
-                
+                numerosUsuario.push(index);                
                 if (numerosUsuario.length == numeros.length) {
                     var prueba = numerosUsuario.every(function (v, i) { return v === numeros[i] });
                     button.style.visibility = "visible";
                     interval = interval - 100;
                                       
                     if(prueba){
-                        puntaje.innerText = nickname+"'s " + 'Score: ' + (ronda-1);                                            
+                        puntaje.innerText = 'Score: ' + (ronda-1);                                            
                     } else{
-                        alert("You Lose! "+puntaje.innerText);
+                    	validateSave();
                         button.innerText = 'Restart';
+                        showGoBack();
                         reset();
                     }
                     
@@ -79,6 +87,27 @@ function changeColor(usuario) {
         });
 
     });
+}
+
+
+
+
+
+
+function validateSave(){
+    var opcion = confirm(puntaje.innerText+" Save score?");
+    if(opcion){
+    	console.log("Guardando puntaje!"); 
+    	$.ajax({ 
+    		  type: "POST", 
+    		  url: "colorsApp/index.html?nickname="+nickname+"&score="+ronda, 
+    		  data: [nickname,ronda], 
+    		  success: function(datos){ 
+    		         console.log(datos)
+    		     }, 
+    		  dataType: "text"
+    		}); 
+    }
 }
 
 function reset(){
@@ -94,7 +123,21 @@ function reset(){
 function simulateClick(index) {
     color.innerText = names[index];
     body.style.backgroundColor = colors[index];
+    
 
+}
+
+function createBubbles(index){
+    
+    const bubble = document.createElement("div");
+    visual.appendChild(bubble);
+    bubble.style.backgroundColor = "white";
+    bubble.style.animation = 'jump 1s ease';
+    console.log("i: ",index," pos: ",document.getElementById(index+1).style.position);
+    
+    bubble.addEventListener('animationend', function () {
+        visual.removeChild(this);
+    });
 }
 
 async function start() {
@@ -113,6 +156,17 @@ async function start() {
     bandGlobal = true;
     
     validateUserAnswer();
+}
+
+function showGoBack(){
+	
+	const div = document.createElement('div');
+	div.classList.add('button');
+	contenedor.appendChild(div);
+	
+	div.addEventListener('click', function(){
+		location.replace("inicio.html");
+	});
 }
 
 function validateUserAnswer() {

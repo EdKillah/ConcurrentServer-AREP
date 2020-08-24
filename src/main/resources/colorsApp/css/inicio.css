@@ -1,0 +1,25 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+	background-color: lightgreen;
+    font-family: 'Rowdies', cursive;    
+    text-align: center;
+}
+
+header {
+	margin-top: 10%;
+	margin-bottom: 20%;
+}
+
+
+div {    
+    display: flex;    
+    justify-content: space-between;
+    margin: auto;
+    
+}
+    
