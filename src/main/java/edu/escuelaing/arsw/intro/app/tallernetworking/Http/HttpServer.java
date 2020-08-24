@@ -148,7 +148,7 @@ public class HttpServer implements Runnable {
 			
 		} else if (res.contains("html")) {			
 			texto.writeText(clientSocket.getOutputStream(), out, archivoEncontrado, "text/html");
-
+			System.out.println("Encontro el archivo html: "+archivoEncontrado);
 		} else if (res.contains(".js")) {
 			
 			texto.writeText(clientSocket.getOutputStream(), out, archivoEncontrado, "text/javascript");
