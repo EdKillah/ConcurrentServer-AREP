@@ -32,7 +32,7 @@ public class ConexionBD {
 		conn = null;
 
 		try {
-			Class.forName("org.postgresql.Driver");
+			//Class.forName("org.postgresql.Driver");
 			String user = "fpllxeutrbzagl";
 			String passwd = "18631cbb8567db69286f56cff7243069a465870dc32ecff807db4ee76b884ab8";
 			String URL = "jdbc:postgresql://ec2-52-204-20-42.compute-1.amazonaws.com:5432/dai9v53g18ehbu?sslmode=require";
