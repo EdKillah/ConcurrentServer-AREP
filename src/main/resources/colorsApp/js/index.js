@@ -36,6 +36,9 @@ button.addEventListener('click', () => {
     
     button.innerText = "Next";
     button.style.visibility = "hidden";
+    if(contenedor.style.display == "block"){
+    	contenedor.style.display = "none";
+    }
     start();
 });
 
@@ -60,13 +63,13 @@ function changeColor(usuario) {
                 color.innerText = names[index];
                 body.style.backgroundColor = colors[index];
                 userTaps++;                
+                posicion.innerText = "# " + (userTaps);
                 setTaps(userTaps);
                 numerosUsuario.push(index);                
                 if (numerosUsuario.length == numeros.length) {
                     var prueba = numerosUsuario.every(function (v, i) { return v === numeros[i] });
                     button.style.visibility = "visible";
-                    interval = interval - 100;
-                                      
+                    interval = interval - 100;                                      
                     if(prueba){
                         puntaje.innerText = 'Score: ' + (ronda-1);                                            
                     } else{
@@ -121,7 +124,7 @@ function reset(){
     userTaps=0;
     numeros=[];
     numerosUsuario=[];
-    puntaje.innerText = 'Score: ' + 0;
+    puntaje.innerText = 'Score: ' + 0;    
 }
 
 function simulateClick(index) {
@@ -145,7 +148,7 @@ function createBubbles(index){
 }
 
 async function start() {
-    
+	body.style.backgroundColor = 'white';
     numeros = [];
     for (var i = 0; i < ronda; i++) {
         await sleep(interval);

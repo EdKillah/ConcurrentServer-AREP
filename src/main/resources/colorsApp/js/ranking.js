@@ -1,6 +1,3 @@
-console.log("Entrnado en ranking!");
-
-
 const datos = document.querySelector(".table");
 const tbody = document.querySelector("tbody");
 const button = document.getElementById("btn");
