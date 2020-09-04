@@ -1,3 +1,4 @@
+
 # Concurrencia en servidores Http con Sockets Java
 
 En el siguiente repositorio se muestra la implementación de un servidor HTTP en Java usando Sockets con el objetivo de simular el funcionamiento de un servidor real, el cual es capaz de retornar elementos de tipo html, css y javascript, incluyendo imagenes.
@@ -93,11 +94,49 @@ A continuación se presenta una página html sencilla incluyendo **css** y unas 
 ![](resources/error.PNG)
 
 
+
 ## Diagrama de clases
 
 La siguiente imagen muestra los diagramas de clases que permiten la interacción entre el servidor y las clases encargadas de la lectura de archivos solicitados por el cliente, la forma de construcción se detalla en el archivo pdf.
 
 ![](resources/class.PNG)
+
+
+## Pruebas de ejecución con Apache JMeter
+
+Como se indicó en los prerrequisitos se hará uso del programa JMeter ofrecido por apache para poder realizar pruebas de peticiones a servidores de manera concurrente para comprobar su funcionamiento y eficiencia.
+Para esta ocasión se dará por sentado que ya se tiene instalado JMeter en su equipo y se procederá a mostrar un pequeño tutorial de como se realizan las pruebas al servidor que se trata en este repositorio.
+
+Lo primero que se debe hacer es prender el servidor (Este paso se encuentra en las instrucciones de uso en la parte superior) O si lo desea se puede probar la aplicación desplegada en **Heroku**.
+
+Luego en JMeter debe dirigirse a la parte superior izquierda y dar click derecho en el botón TestPlan y seguir los pasos como se muestra en la imagen, una vez creada la clase escogeremos
+
+ - el número de peticiones  
+ -  el tiempo en segundos que tardará en
+   realizar las peticiones .
+-    Y las veces que se realizarán.
+
+![](resources/jmeter1.png)
+
+
+Luego se añadirá un HttpRequestDefault y un HttpRequest para que reciba las peticiones raíz y algún recurso en especifico. En este caso usamos la dirección de heroku en la que se encuentra desplegada la aplicación. 
+https://concurrentserver-arep.herokuapp.com/ y usamos los recursos 
+* index.html
+* colorsApp/inicio.html
+* colorsApp/index.html
+
+![](resources/jmeter2.png)
+
+Ahora procederemos a escoger los diferentes Listeners que ofrece JMeter para analizar la información de manera amigable
+
+![](resources/jmeter5.png)
+
+Resultados en forma de arbol
+![](resources/jmeter4.PNG)
+
+Resultados en forma de tabla
+![](resources/jmeter3.PNG)
+
 
 
 
