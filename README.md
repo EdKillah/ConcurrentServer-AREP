@@ -132,10 +132,10 @@ Ahora procederemos a escoger los diferentes Listeners que ofrece JMeter para ana
 ![](resources/jmeter5.png)
 
 Resultados en forma de arbol
-![](resources/jmeter4.PNG)
+![](resources/jmeter4.png)
 
 Resultados en forma de tabla
-![](resources/jmeter3.PNG)
+![](resources/jmeter3.png)
 
 
 
